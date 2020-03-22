@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="mitCSS.css">
+    <title>Opret Produkt</title>
+</head>
+<body>
+<div class="container container-custom">
+
+    <div th:insert="fragments/topMenu" class="menu"></div>
+
+    <h1><br>Opret nyt produkt</h1>
+
+    <form action="#" th:action="@{/create}" th:object="${product}" method="post">
+
+        <input type=hidden th:field="*{id}" >
+        <span>Produktnavn:<br></span>
+        <input type="text" th:field="*{pname}" placeholder="navn">
+        <span><br>Pris:<br></span>
+        <input type="text" th:field="*{price}">
+        <span><br>Beskrivelse:<br></span>
+        <textarea input th:field="*{pdescription}" placeholder="beskrivelse"></textarea>
+
+        <span><br>Virksomhed:<br></span>
+        <select th:field="*{company}">
+            <option value=""> Vælg her </option>
+            <option th:each="c : ${virksomheder}"
+                    th:value="${c.id}"
+                    th:text="${c.cname}"/>
+        </select>
+
+        <br>
+        <button type="submit">Tilføj</button>
+    </form>
+
+</div>
+</body>
+</html>

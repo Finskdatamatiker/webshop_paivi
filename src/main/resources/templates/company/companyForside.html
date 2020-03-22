@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="mitCSS.css">
+    <title>Virksomheder forside</title>
+</head>
+<body>
+
+<div class="container container-custom">
+
+    <div th:insert="fragments/topMenu" class="menu"></div>
+
+    <h1><br>Virksomheder</h1>
+
+    <table>
+        <tr class="tr">
+            <th>Id</th>
+            <th>Navn</th>
+            <th></th>
+            <th></th>
+            <th>Produkter: </th>
+
+
+        </tr>
+        <tr th:each="c : ${virksomheder}" class="tr">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.cname}"></td>
+            <td><a th:href="@{'/updateCompany/' + ${c.id}}">Opdatere</a></td>
+            <td><a th:href="@{'/deleteCompany/' + ${c.id}}">Slet</a></td>
+
+            <td id="tiid" th:each="p : ${c.product}">
+                <span th:text="${p.pname}"></span>
+            </td>
+
+        </tr>
+
+    </table>
+
+    <br>
+    <a th:href="@{/createCompany}">Opret ny virksomhed</a>
+
+</div>
+</body>
+</html>

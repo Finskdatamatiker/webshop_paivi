@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="mitCSS.css">
+    <title>Forside</title>
+</head>
+<body>
+
+<div class="container container-custom">
+
+    <div th:insert="fragments/topMenu" class="menu"></div>
+
+        <h1><br>Vareliste</h1>
+
+        <table>
+            <tr class="tr">
+                <th>ID</th>
+                <th>Navn</th>
+                <th>Pris</th>
+                <th>Beskrivelse</th>
+                <th>Producent</th>
+            </tr>
+            <tr th:each="p : ${produkter}" class="tr">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.pname}"></td>
+                <td th:text="${p.price}"></td>
+                <td th:text="${p.pdescription}"></td>
+                <td th:text="${p.company}"></td>
+                <td><a th:href="@{'/update/' + ${p.id}}">Opdatere</a></td>
+                <td><a th:href="@{'/delete/' + ${p.id}}">Slet</a></td>
+
+            </tr>
+
+        </table>
+
+</div>
+</body>
+</html>
