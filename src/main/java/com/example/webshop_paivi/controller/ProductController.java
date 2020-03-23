@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProductController {
@@ -40,12 +41,14 @@ public class ProductController {
     @GetMapping("/create")
     public String visCreate(Product product, Model model)
     {
-        List<Company> liste = iCompanyService.getVirksomheder();
-        if(liste.size() == 0){
+        Optional<Company> company = iCompanyService.findMedId(0);
+        if(company.isEmpty()){
             return "redirect:/";
         }
         else{
+            List<Company> liste = iCompanyService.getVirksomheder();
             model.addAttribute("virksomheder", liste);
+            //første element som default, fordi null ikke var tilladt
             product.setCompany(liste.get(0));
             model.addAttribute("product", product);
             return "/create";
