@@ -25,7 +25,9 @@ public class ProductController {
     @GetMapping("/")
     public String visForside(Model model){
         List<Product> liste = iProductService.getProdukter();
-        model.addAttribute("produkter", liste);
+        if(liste.size() != 0) {
+            model.addAttribute("produkter", liste);
+        }
         return "/index";
     }
 
@@ -39,7 +41,13 @@ public class ProductController {
     public String visCreate(Product product, Model model)
     {
         List<Company> liste = iCompanyService.getVirksomheder();
-        model.addAttribute("virksomheder", liste);
+        if(liste.size() != 0) {
+            model.addAttribute("virksomheder", liste);
+        }
+        else{
+            String melding = "Ingen virksomheder oprettet endnu";
+            model.addAttribute("melding", melding);
+        }
         model.addAttribute("product", product);
         return "/create";
     }
