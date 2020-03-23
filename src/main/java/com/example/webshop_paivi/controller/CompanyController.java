@@ -2,7 +2,6 @@ package com.example.webshop_paivi.controller;
 
 import com.example.webshop_paivi.model.Company;
 import com.example.webshop_paivi.model.Product;
-import com.example.webshop_paivi.service.IProductService;
 import com.example.webshop_paivi.service.company.ICompanyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +22,7 @@ public class CompanyController {
     }
 
     @GetMapping("/companyForside")
-    public String visCompanyForside(Model model, Company company){
+    public String visCompanyForside(Company company, Model model){
         List<Company> listeVirksomheder = iCompanyService.getVirksomheder();
         List<Product> listeProdukterTilCompany = company.getProduct();
         model.addAttribute("virksomheder", listeVirksomheder);

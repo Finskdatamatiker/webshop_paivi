@@ -41,15 +41,15 @@ public class ProductController {
     public String visCreate(Product product, Model model)
     {
         List<Company> liste = iCompanyService.getVirksomheder();
-        if(liste.size() != 0) {
-            model.addAttribute("virksomheder", liste);
+        if(liste.size() == 0){
+            return "redirect:/";
         }
         else{
-            String melding = "Ingen virksomheder oprettet endnu";
-            model.addAttribute("melding", melding);
+            model.addAttribute("virksomheder", liste);
+            product.setCompany(liste.get(0));
+            model.addAttribute("product", product);
+            return "/create";
         }
-        model.addAttribute("product", product);
-        return "/create";
     }
 
     /**
