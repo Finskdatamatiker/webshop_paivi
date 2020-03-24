@@ -1,6 +1,7 @@
 package com.example.webshop_paivi.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -8,6 +9,7 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotBlank(message = "Indtast venligst navnet")
     private String cname;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "company")

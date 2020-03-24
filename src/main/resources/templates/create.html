@@ -18,11 +18,16 @@
 
         <input type=hidden th:field="*{id}" >
         <span>Produktnavn:<br></span>
-        <input type="text" th:field="*{pname}" placeholder="navn">
+        <input type="text" th:field="*{pname}" placeholder="navn" required>
+        <span th:if="${#fields.hasErrors('pname')}" th:errors="*{pname}">Fejl i navnet</span>
+
         <span><br>Pris:<br></span>
-        <input type="text" th:field="*{price}">
+        <input type=number step="any" th:field="*{price}">
+        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Fejl i prisen</span>
+
         <span><br>Beskrivelse:<br></span>
-        <textarea input th:field="*{pdescription}" placeholder="beskrivelse"></textarea>
+        <textarea input th:field="*{pdescription}" placeholder="beskrivelse" required></textarea>
+        <span th:if="${#fields.hasErrors('pdescription')}" th:errors="*{pdescription}">Fejl i beskrivelsen</span>
 
         <span><br>Virksomhed:<br></span>
 

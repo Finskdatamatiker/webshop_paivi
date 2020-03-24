@@ -18,7 +18,8 @@
 
         <input type=hidden th:field="*{id}" >
         <span>Virksomhedens navn:<br></span>
-        <input type="text" th:field="*{cname}" placeholder="navn">
+        <input type="text" th:field="*{cname}" placeholder="navn" required>
+        <span th:if="${#fields.hasErrors('cname')}" th:errors="*{cname}">Fejl i navnet</span>
         <br>
         <button type="submit">Tilføj</button>
     </form>

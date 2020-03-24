@@ -6,11 +6,13 @@ import com.example.webshop_paivi.service.IProductService;
 import com.example.webshop_paivi.service.company.ICompanyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class ProductController {
@@ -41,12 +43,11 @@ public class ProductController {
     @GetMapping("/create")
     public String visCreate(Product product, Model model)
     {
-        Optional<Company> company = iCompanyService.findMedId(0);
-        if(company.isEmpty()){
+        List<Company> liste = iCompanyService.getVirksomheder();
+        if(liste.size() == 0){
             return "redirect:/";
         }
         else{
-            List<Company> liste = iCompanyService.getVirksomheder();
             model.addAttribute("virksomheder", liste);
             //første element som default, fordi null ikke var tilladt
             product.setCompany(liste.get(0));
@@ -62,12 +63,19 @@ public class ProductController {
      * @return
      */
     @PostMapping("/create")
-    public String lavProdukt(Product product)
+    public String lavProdukt(@Valid Product product, BindingResult bindingResult, Model model)
     {
+        if(bindingResult.hasErrors()){
+            model.addAttribute("bindingResult", bindingResult);
+            //virksomheder skal fragtes igen til forsiden
+            List<Company> liste = iCompanyService.getVirksomheder();
+            model.addAttribute("virksomheder", liste);
+            product.setCompany(liste.get(0));
+            return "/create";
+        }
         iProductService.gem(product);
         return "redirect:/";
     }
-
 
     @GetMapping("/update/{id}")
     public String visUpdate(@PathVariable("id") long id, Model model){
@@ -78,7 +86,15 @@ public class ProductController {
     }
 
     @PostMapping("/update")
-    public String update(Product product){
+    public String update(@Valid Product product, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("bindingResult", bindingResult);
+            //virksomheder skal fragtes igen til forsiden
+            List<Company> liste = iCompanyService.getVirksomheder();
+            model.addAttribute("virksomheder", liste);
+            product.setCompany(liste.get(0));
+            return "/update";
+        }
         iProductService.gem(product);
         return "redirect:/";
     }
@@ -88,6 +104,4 @@ public class ProductController {
         iProductService.slet(id);
         return "redirect:/";
     }
-
-
 }
