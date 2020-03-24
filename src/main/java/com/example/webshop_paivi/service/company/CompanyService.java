@@ -25,8 +25,6 @@ public class CompanyService implements ICompanyService {
         return companylist;
     }
 
-
-
     @Override
     public void gem(Company company) {
         companyRepository.save(company);
