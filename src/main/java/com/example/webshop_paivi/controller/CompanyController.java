@@ -25,9 +25,7 @@ public class CompanyController {
     @GetMapping("/companyForside")
     public String visCompanyForside(Company company, Model model){
         List<Company> listeVirksomheder = iCompanyService.getVirksomheder();
-        List<Product> listeProdukterTilCompany = company.getProduct();
         model.addAttribute("virksomheder", listeVirksomheder);
-        model.addAttribute("produkterVirksomhed", listeProdukterTilCompany);
         return "/company/companyForside";
     }
 

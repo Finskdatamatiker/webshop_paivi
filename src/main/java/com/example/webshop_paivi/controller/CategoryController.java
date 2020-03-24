@@ -25,9 +25,7 @@ public class CategoryController {
     @GetMapping("/categoryForside")
     public String visCategoryside(Category category, Model model){
         List<Category> listeCategorier = iCategoryService.getCategorier();
-        List<Product> listeProdukterICategory = category.getProducts();
         model.addAttribute("categorier", listeCategorier);
-        model.addAttribute("produkterI", listeProdukterICategory);
         return "/category/categoryForside";
     }
 
