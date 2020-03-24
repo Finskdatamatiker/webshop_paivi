@@ -89,7 +89,9 @@ public class ProductController {
     @GetMapping("/update/{id}")
     public String visUpdate(@PathVariable("id") long id, Model model){
         List<Company> liste = iCompanyService.getVirksomheder();
+        List<Category> kategorier = iCategoryService.getCategorier();
         model.addAttribute("virksomheder", liste);
+        model.addAttribute("kategorier", kategorier);
         model.addAttribute("product", iProductService.findMedId(id));
         return "/update";
     }
@@ -98,9 +100,11 @@ public class ProductController {
     public String update(@Valid Product product, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             model.addAttribute("bindingResult", bindingResult);
-            //virksomheder skal fragtes igen til forsiden
+            //virksomheder og kategorier skal fragtes igen til forsiden
             List<Company> liste = iCompanyService.getVirksomheder();
+            List<Category> kategorier = iCategoryService.getCategorier();
             model.addAttribute("virksomheder", liste);
+            model.addAttribute("kategorier", kategorier);
             product.setCompany(liste.get(0));
             return "/update";
         }

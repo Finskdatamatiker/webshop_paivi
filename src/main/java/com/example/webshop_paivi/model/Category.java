@@ -20,6 +20,7 @@ public class Category {
      * Men jeg har valgt, at category opretter man uden at tilknytte kategorier.
      * Så det er gennem produkter, at kategorier vælges = produktet mapped by kategorier
      * Man kunne gøre det omvendt eller begge veje, men jeg har valgt produktet som indgangen.
+     * Jeg skal ikke slette kategori, hvis jeg slette produkt og omvendt, så cascade.remove er ikke med.
      */
    @ManyToMany(mappedBy = "categorys", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     protected List<Product> products = new ArrayList<>();

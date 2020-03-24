@@ -37,6 +37,14 @@
                     th:text="${c.cname}"/>
         </select>
 
+        <br>
+        <span><br>Kategori:<br></span>
+        <select th:field="*{categorys}" multiple>
+            <option value=""> Vælg kategori </option>
+            <option th:each="ca : ${kategorier}"
+                    th:value="${ca.id}"
+                    th:text="${ca.caname}"/>
+        </select>
 
         <br>
         <button type="submit">Opdatere</button>
