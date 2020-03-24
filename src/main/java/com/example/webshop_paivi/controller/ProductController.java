@@ -81,7 +81,6 @@ public class ProductController {
             return "/create";
         }
 
-
         iProductService.gem(product);
         return "redirect:/";
     }

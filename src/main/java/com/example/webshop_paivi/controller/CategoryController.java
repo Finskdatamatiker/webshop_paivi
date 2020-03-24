@@ -87,7 +87,8 @@ public class CategoryController {
         }
         }
         /*hvis kategori indeholder produkter, som også har
-          andre kateogier som denne, kan kategorien ikke slettes
+          andre kateogier som denne, kan kategorien ikke slettes.
+          Burde laver en fejlmelding om det.
          */
         if(!produktHarAndreKategorier){
             iCategoryService.slet(id);
