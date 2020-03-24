@@ -3,6 +3,7 @@ package com.example.webshop_paivi.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,9 +28,17 @@ public class Product {
     @JoinColumn(name="company_id", nullable = false)
     protected Company company;
 
-    @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    protected List<Category> categorys;
+    /**
+     * Category kan have mange produkter, et produkt kan tilhøre mange kategorier.
+     * Når man opretter et produkt, kan man tilføje en kategori til den (har ikke gjort det obligatorisk)
+     * Men jeg har valgt, at category opretter man uden at tilknytte kategorier.
+     * Så det er gennem produkter, at kategorier vælges = produktet mapped by kategorier
+     * Man kunne gøre det omvendt eller begge veje, men jeg har valgt produktet som indgangen.
+     */
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name="products_categorys", joinColumns = { @JoinColumn(name = "product_id")}, inverseJoinColumns = { @JoinColumn(name="category_id")})
+    protected List<Category> categorys = new ArrayList<>();
 
     public Product() {}
 
@@ -58,11 +67,11 @@ public class Product {
         this.pdescription = description;
     }
 
-    public List<Category> getCategory() {
+    public List<Category> getCategorys() {
         return categorys;
     }
 
-    public void setCategory(List<Category> category) {
+    public void setCategorys(List<Category> categorys) {
         this.categorys = categorys;
     }
 

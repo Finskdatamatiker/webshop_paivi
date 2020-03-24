@@ -22,6 +22,10 @@
                 <th>Pris</th>
                 <th>Beskrivelse</th>
                 <th>Producent</th>
+                <th></th>
+                <th></th>
+                <th>Kategorier</th>
+
             </tr>
             <tr th:each="p : ${produkter}" class="tr">
                 <td th:text="${p.id}"></td>
@@ -29,8 +33,14 @@
                 <td th:text="${p.price}"></td>
                 <td th:text="${p.pdescription}"></td>
                 <td th:text="${p.company}"></td>
+
                 <td><a th:href="@{'/update/' + ${p.id}}">Opdatere</a></td>
                 <td><a th:href="@{'/delete/' + ${p.id}}">Slet</a></td>
+
+                <td id="tiid" th:each="c : ${p.categorys}">
+                    <span th:text="${c.caname}"></span>
+                </td>
+
             </tr>
 
         </table>

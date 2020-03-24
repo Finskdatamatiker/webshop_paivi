@@ -1,8 +1,10 @@
 package com.example.webshop_paivi.controller;
 
+import com.example.webshop_paivi.model.Category;
 import com.example.webshop_paivi.model.Company;
 import com.example.webshop_paivi.model.Product;
 import com.example.webshop_paivi.service.IProductService;
+import com.example.webshop_paivi.service.category.ICategoryService;
 import com.example.webshop_paivi.service.company.ICompanyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +21,12 @@ public class ProductController {
 
     private final IProductService iProductService;
     private final ICompanyService iCompanyService;
+    private final ICategoryService iCategoryService;
 
-    public ProductController(IProductService iProductService, ICompanyService iCompanyService) {
-        this.iProductService = iProductService;
-        this.iCompanyService = iCompanyService;
+    public ProductController(IProductService iPro, ICompanyService iCom, ICategoryService iCat) {
+        this.iProductService = iPro;
+        this.iCompanyService = iCom;
+        this.iCategoryService = iCat;
     }
 
     @GetMapping("/")
@@ -51,13 +55,16 @@ public class ProductController {
             model.addAttribute("virksomheder", liste);
             //første element som default, fordi null ikke var tilladt
             product.setCompany(liste.get(0));
+            //kategory er ikke must
+            List<Category> listeCategorier = iCategoryService.getCategorier();
+            model.addAttribute("categorier", listeCategorier);
             model.addAttribute("product", product);
             return "/create";
         }
     }
 
     /**
-     * Prdduktoplysninger bliver flettet i template med thymeleaf, som også giver adgang
+     * Produktoplysninger bliver flettet i template med thymeleaf, som også giver adgang
      * til fields her i konstruktør
      * @param product
      * @return
@@ -73,6 +80,8 @@ public class ProductController {
             product.setCompany(liste.get(0));
             return "/create";
         }
+
+
         iProductService.gem(product);
         return "redirect:/";
     }

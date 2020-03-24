@@ -3,6 +3,7 @@ package com.example.webshop_paivi.controller;
 import com.example.webshop_paivi.model.Category;
 import com.example.webshop_paivi.model.Company;
 import com.example.webshop_paivi.model.Product;
+import com.example.webshop_paivi.service.IProductService;
 import com.example.webshop_paivi.service.category.ICategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +19,14 @@ import java.util.List;
 public class CategoryController {
 
     public final ICategoryService iCategoryService;
-    public CategoryController(ICategoryService iCategoryService){
+    public final IProductService iProductService;
+    public CategoryController(ICategoryService iCategoryService, IProductService iProductService){
+        this.iProductService = iProductService;
         this.iCategoryService = iCategoryService;
     }
 
     @GetMapping("/categoryForside")
-    public String visCategoryside(Category category, Model model){
+    public String visCategoryside(Model model){
         List<Category> listeCategorier = iCategoryService.getCategorier();
         model.addAttribute("categorier", listeCategorier);
         return "/category/categoryForside";
@@ -32,6 +35,8 @@ public class CategoryController {
 
     @GetMapping("/createCategory")
     public String visCreate(Category category, Model model){
+        List<Product> produkter = iProductService.getProdukter();
+        model.addAttribute("produkter", produkter);
         model.addAttribute("category", category);
         return "/category/createCategory";
     }

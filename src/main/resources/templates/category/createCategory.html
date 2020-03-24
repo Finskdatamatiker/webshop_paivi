@@ -20,6 +20,7 @@
         <span>Kategorinavn:<br></span>
         <input type="text" th:field="*{caname}" placeholder="navn" required>
         <span th:if="${#fields.hasErrors('caname')}" th:errors="*{caname}">Fejl i navnet</span>
+
         <br>
         <button type="submit">Tilføj</button>
     </form>

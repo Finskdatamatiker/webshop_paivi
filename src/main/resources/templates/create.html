@@ -36,7 +36,16 @@
             <option value=""> Vælg her </option>
             <option th:each="c : ${virksomheder}"
                     th:value="${c.id}"
-                    th:text="${c.cname}"/>
+                    th:text="${c.cname}"></option>
+        </select>
+
+        <span><br>Kategorier:<br></span>
+        <select th:field="*{categorys}" multiple>
+
+            <option value=""> Vælg her </option>
+            <option th:each="ca : ${categorier}"
+                    th:value="${ca.id}"
+                    th:text="${ca.caname}"></option>
         </select>
 
 

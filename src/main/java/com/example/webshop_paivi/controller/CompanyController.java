@@ -23,7 +23,7 @@ public class CompanyController {
     }
 
     @GetMapping("/companyForside")
-    public String visCompanyForside(Company company, Model model){
+    public String visCompanyForside(Model model){
         List<Company> listeVirksomheder = iCompanyService.getVirksomheder();
         model.addAttribute("virksomheder", listeVirksomheder);
         return "/company/companyForside";
