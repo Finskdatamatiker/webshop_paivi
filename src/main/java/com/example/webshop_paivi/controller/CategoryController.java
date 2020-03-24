@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CategoryController {
@@ -71,6 +72,27 @@ public class CategoryController {
 
     @GetMapping("/deleteCategory/{id}")
     public String delete(@PathVariable("id") long id){
+        Optional<Category> category = iCategoryService.findMedId(id);
+        boolean produktHarAndreKategorier = false;
+        if(category.isPresent()){
+        List<Product> produkter = category.get().getProducts();
+
+        for(Product p : produkter){
+            for(Category c : p.getCategorys()){
+                String navn = c.getCaname();
+                if(!navn.equals(category.get().getCaname())){
+                    produktHarAndreKategorier = true;
+                    break;
+                }
+            }
+        }
+        }
+        /*hvis kategori indeholder produkter, som også har
+          andre kateogier som denne, kan kategorien ikke slettes
+         */
+        if(produktHarAndreKategorier){
+            return "redirect:/categoryForside";
+        }
         iCategoryService.slet(id);
         return "redirect:/categoryForside";
     }

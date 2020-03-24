@@ -34,9 +34,16 @@ public class Product {
      * Men jeg har valgt, at category opretter man uden at tilknytte kategorier.
      * Så det er gennem produkter, at kategorier vælges = produktet mapped by kategorier
      * Man kunne gøre det omvendt eller begge veje, men jeg har valgt produktet som indgangen.
+     * Her bliver andre produkter ikke slettet fra det samme kategori, så remove er ikke med
      */
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
     @JoinTable(name="products_categorys", joinColumns = { @JoinColumn(name = "product_id")}, inverseJoinColumns = { @JoinColumn(name="category_id")})
     protected List<Category> categorys = new ArrayList<>();
 
