@@ -27,11 +27,11 @@
         </tr>
         <tr th:each="c : ${categorier}" class="tr">
             <td th:text="${c.id}"></td>
-            <td th:text="${c.cname}"></td>
+            <td th:text="${c.caname}"></td>
             <td><a th:href="@{'/updateCategory/' + ${c.id}}">Opdatere</a></td>
             <td><a th:href="@{'/deleteCategory/' + ${c.id}}">Slet</a></td>
 
-            <td id="tiid" th:each="p : ${c.product}">
+            <td id="tiid" th:each="p : ${c.products}">
                 <span th:text="${p.pname}"></span>
             </td>
 
@@ -40,7 +40,7 @@
     </table>
 
     <br>
-    <a th:href="@{/createCompany}">Opret nyt kategori</a>
+    <a th:href="@{/createCategory}">Opret nyt kategori</a>
 
 </div>
 </body>
