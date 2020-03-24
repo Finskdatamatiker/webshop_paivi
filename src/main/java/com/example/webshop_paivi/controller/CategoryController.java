@@ -1,7 +1,6 @@
 package com.example.webshop_paivi.controller;
 
 import com.example.webshop_paivi.model.Category;
-import com.example.webshop_paivi.model.Company;
 import com.example.webshop_paivi.model.Product;
 import com.example.webshop_paivi.service.IProductService;
 import com.example.webshop_paivi.service.category.ICategoryService;
@@ -90,10 +89,9 @@ public class CategoryController {
         /*hvis kategori indeholder produkter, som også har
           andre kateogier som denne, kan kategorien ikke slettes
          */
-        if(produktHarAndreKategorier){
-            return "redirect:/categoryForside";
+        if(!produktHarAndreKategorier){
+            iCategoryService.slet(id);
         }
-        iCategoryService.slet(id);
         return "redirect:/categoryForside";
     }
 
