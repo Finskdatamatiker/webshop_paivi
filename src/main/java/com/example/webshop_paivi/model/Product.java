@@ -41,9 +41,12 @@ public class Product {
             inverseJoinColumns = { @JoinColumn(name="category_id")})
     protected List<Category> categorys = new ArrayList<>();
 
+    /**
+     * Product er child i forhold til CompanyDescription.
+     */
     @MapsId
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)/*(optional = false)*/
-    @JoinColumn(name = "company_description_id"/*, nullable = false*/)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "company_description_id", nullable = false)
     protected CompanyDescription company_description;
 
     public Product() {}

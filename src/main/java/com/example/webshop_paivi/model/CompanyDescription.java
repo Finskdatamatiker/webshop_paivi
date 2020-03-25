@@ -14,9 +14,12 @@ public class CompanyDescription {
     @Length(max = 2000)
     private String co_description;
 
-  /*  @MapsId
-    @OneToOne/*(optional = false)*/
-  //  @JoinColumn(name = "product_id"/*, nullable = false*/)
+
+    /**
+     * Jeg har valgt at have CompanyDescription som parent. Man skal ikke ,
+     * , fordi hvis man sletter
+     * CompanyDescription,
+     */
     @OneToOne(mappedBy = "company_description", fetch = FetchType.LAZY)
     protected Product product;
 
