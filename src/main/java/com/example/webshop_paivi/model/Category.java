@@ -1,5 +1,7 @@
 package com.example.webshop_paivi.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -21,7 +23,14 @@ public class Category {
      * Så det er gennem produkter, at kategorier vælges = produktet mapped by kategorier
      * Man kunne gøre det omvendt eller begge veje, men jeg har valgt produktet som indgangen.
      */
-    @ManyToMany(mappedBy = "categorys", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @ManyToMany(mappedBy = "categorys",fetch = FetchType.LAZY, cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
     protected List<Product> products = new ArrayList<>();
 
     public Category(){}

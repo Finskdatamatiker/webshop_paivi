@@ -1,5 +1,7 @@
 package com.example.webshop_paivi.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -38,13 +40,10 @@ public class Product {
      */
 
     @ManyToMany(fetch = FetchType.LAZY, cascade =
-            {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH,
-                    CascadeType.PERSIST
-            })
-    @JoinTable(name="products_categorys", joinColumns = { @JoinColumn(name = "product_id")}, inverseJoinColumns = { @JoinColumn(name="category_id")})
+            {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+    @JoinTable(name="products_categorys",
+            joinColumns = { @JoinColumn(name = "product_id")},
+            inverseJoinColumns = { @JoinColumn(name="category_id")})
     protected List<Category> categorys = new ArrayList<>();
 
     public Product() {}
