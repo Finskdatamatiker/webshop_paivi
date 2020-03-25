@@ -1,7 +1,5 @@
 package com.example.webshop_paivi.model;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -42,6 +40,11 @@ public class Product {
             joinColumns = { @JoinColumn(name = "product_id")},
             inverseJoinColumns = { @JoinColumn(name="category_id")})
     protected List<Category> categorys = new ArrayList<>();
+
+    @MapsId
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)/*(optional = false)*/
+    @JoinColumn(name = "company_description_id"/*, nullable = false*/)
+    protected CompanyDescription company_description;
 
     public Product() {}
 
@@ -85,6 +88,15 @@ public class Product {
     public void setCompany(Company company) {
         this.company = company;
     }
+
+    public CompanyDescription getCompany_description() {
+        return company_description;
+    }
+
+    public void setCompany_description(CompanyDescription companyDescription) {
+        this.company_description = companyDescription;
+    }
+
 
     @Override
     public String toString() {

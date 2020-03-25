@@ -2,10 +2,12 @@ package com.example.webshop_paivi.controller;
 
 import com.example.webshop_paivi.model.Category;
 import com.example.webshop_paivi.model.Company;
+import com.example.webshop_paivi.model.CompanyDescription;
 import com.example.webshop_paivi.model.Product;
 import com.example.webshop_paivi.service.IProductService;
 import com.example.webshop_paivi.service.category.ICategoryService;
 import com.example.webshop_paivi.service.company.ICompanyService;
+import com.example.webshop_paivi.service.companydescription.ICompanyDescriptionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,11 +24,13 @@ public class ProductController {
     private final IProductService iProductService;
     private final ICompanyService iCompanyService;
     private final ICategoryService iCategoryService;
+    private final ICompanyDescriptionService iCompanyDescriptionService;
 
-    public ProductController(IProductService iPro, ICompanyService iCom, ICategoryService iCat) {
+    public ProductController(IProductService iPro, ICompanyService iCom, ICategoryService iCat, ICompanyDescriptionService iComde) {
         this.iProductService = iPro;
         this.iCompanyService = iCom;
         this.iCategoryService = iCat;
+        this.iCompanyDescriptionService = iComde;
     }
 
     @GetMapping("/")
@@ -45,7 +49,7 @@ public class ProductController {
      * @return
      */
     @GetMapping("/create")
-    public String visCreate(Product product, Model model)
+    public String visCreate(Product product, CompanyDescription comdes, Model model)
     {
         List<Company> liste = iCompanyService.getVirksomheder();
         if(liste.size() == 0){
@@ -53,12 +57,11 @@ public class ProductController {
         }
         else{
             model.addAttribute("virksomheder", liste);
-            //første element som default, fordi null ikke var tilladt
             product.setCompany(liste.get(0));
-            //kategory er ikke must
             List<Category> listeCategorier = iCategoryService.getCategorier();
             model.addAttribute("categorier", listeCategorier);
             model.addAttribute("product", product);
+            model.addAttribute("company_description", comdes);
             return "/create";
         }
     }
@@ -70,17 +73,20 @@ public class ProductController {
      * @return
      */
     @PostMapping("/create")
-    public String lavProdukt(@Valid Product product, BindingResult bindingResult, Model model)
+    public String lavProdukt(@Valid Product product, BindingResult br,@Valid CompanyDescription comdes, BindingResult br2, Model model)
     {
-        if(bindingResult.hasErrors()){
-            model.addAttribute("bindingResult", bindingResult);
-            //virksomheder skal fragtes igen til forsiden
+        if(br.hasErrors() || br2.hasErrors()){
+            model.addAttribute("bindingResult", br);
+            model.addAttribute("bindingResult2", br2);
             List<Company> liste = iCompanyService.getVirksomheder();
             model.addAttribute("virksomheder", liste);
+            List<Category> listeCategorier = iCategoryService.getCategorier();
+            model.addAttribute("categorier", listeCategorier);
             product.setCompany(liste.get(0));
             return "/create";
         }
-
+        iCompanyDescriptionService.gem(comdes);
+        product.setCompany_description(comdes);
         iProductService.gem(product);
         return "redirect:/";
     }

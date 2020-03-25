@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="mitCSS.css">
+    <title>Opret virksomhedsbeskrivelse</title>
+</head>
+<body>
+<div class="container container-custom">
+
+    <div th:insert="fragments/topMenu" class="menu"></div>
+
+    <h1><br>Opret ny virksomhedsbeskrivelse</h1>
+
+    <form action="#" th:action="@{/createCompanyDesc}" th:object="${companyDesc}" method="post">
+
+        <input type=hidden th:field="*{id}" >
+        <span>Beskrivelse:<br></span>
+        <textarea input th:field="*{co_description}" placeholder="beskrivelse" required></textarea>
+        <span th:if="${#fields.hasErrors('co_description')}" th:errors="*{co_description}">Fejl</span>
+        <br>
+        <button type="submit">Tilføj</button>
+    </form>
+
+</div>
+</body>
+</html>

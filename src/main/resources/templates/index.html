@@ -22,6 +22,8 @@
                 <th>Pris</th>
                 <th>Beskrivelse</th>
                 <th>Producent</th>
+                <th>Virksomhedsbeskrivelse</th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th>Kategorier</th>
@@ -33,17 +35,21 @@
                 <td th:text="${p.price}"></td>
                 <td th:text="${p.pdescription}"></td>
                 <td th:text="${p.company}"></td>
+                <td th:text="${p.company_description}"></td>
 
                 <td><a th:href="@{'/update/' + ${p.id}}">Opdatere</a></td>
                 <td><a th:href="@{'/delete/' + ${p.id}}">Slet</a></td>
+                <td><a th:href="@{'/createCompanyDesc/' + ${p.id}}">Tilføj virksomhedsbeskrivelse</a></td>
 
                 <td id="tiid" th:each="c : ${p.categorys}">
                     <span th:text="${c.caname}"></span>
                 </td>
 
+
             </tr>
 
         </table>
+
 
 </div>
 </body>

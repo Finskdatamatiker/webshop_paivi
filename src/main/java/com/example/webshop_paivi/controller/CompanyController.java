@@ -1,7 +1,6 @@
 package com.example.webshop_paivi.controller;
 
 import com.example.webshop_paivi.model.Company;
-import com.example.webshop_paivi.model.Product;
 import com.example.webshop_paivi.service.company.ICompanyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

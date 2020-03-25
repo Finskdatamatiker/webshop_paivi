@@ -14,7 +14,7 @@
 
     <h1><br>Opret nyt produkt</h1>
 
-    <form action="#" th:action="@{/create}" th:object="${product}" method="post">
+    <form action="#" th:action="@{/create}" th:object="${product}"  method="post">
 
         <input type=hidden th:field="*{id}" >
         <span>Produktnavn:<br></span>
@@ -48,6 +48,9 @@
                     th:text="${ca.caname}"></option>
         </select>
 
+        <span><br>Virksomhedsbekrivelse:<br></span>
+        <textarea input th:field="${company_description.co_description}" placeholder="beskrivelse" required></textarea>
+        <span th:if="${#fields.hasErrors('company_description.co_description')}" th:errors="*{company_description.co_description}">Fejl i beskrivelsen</span>
 
         <br>
         <button type="submit">Tilføj</button>

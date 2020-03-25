@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="mitCSS.css">
+    <title>Beskrivelseforside</title>
+</head>
+<body>
+
+<div class="container container-custom">
+
+    <div th:insert="fragments/topMenu" class="menu"></div>
+
+    <h1><br>Virksomhedens beskrivelse af produktet</h1>
+
+    <table>
+        <tr class="tr">
+            <th>Id</th>
+            <th>Beskrivelse</th>
+            <th></th>
+            <th></th>
+            <th>Produktet</th>
+
+        </tr>
+        <tr th:each="c : ${beskrivelser}" class="tr">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.co_description}"></td>
+            <td><a th:href="@{'/updateCompanyDesc/' + ${c.id}}">Opdatere</a></td>
+
+        </tr>
+
+    </table>
+
+
+</div>
+</body>
+</html>
