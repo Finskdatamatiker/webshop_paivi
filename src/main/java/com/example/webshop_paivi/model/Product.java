@@ -42,7 +42,7 @@ public class Product {
     protected List<Category> categorys = new ArrayList<>();
 
     /**
-     * Product er child i forhold til CompanyDescription.
+     *
      */
     @MapsId
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)

@@ -48,7 +48,7 @@
                     th:text="${ca.caname}"></option>
         </select>
 
-        <span><br>Virksomhedsbekrivelse:<br></span>
+        <span><br>Virksomhedsbeskrivelse:<br></span>
         <textarea input th:field="${company_description.co_description}" placeholder="beskrivelse" required></textarea>
         <span th:if="${#fields.hasErrors('company_description.co_description')}" th:errors="*{company_description.co_description}">Fejl i beskrivelsen</span>
 

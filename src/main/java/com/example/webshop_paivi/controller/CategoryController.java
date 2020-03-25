@@ -70,25 +70,9 @@ public class CategoryController {
         return "redirect:/categoryForside";
     }
 
-    /**
-     * Hvis kategori har produkter, vil jeg ikke slette den.
-     * @param id
-     * @return
-     */
     @GetMapping("/deleteCategory/{id}")
     public String delete(@PathVariable("id") long id){
-        Optional<Category> category = iCategoryService.findMedId(id);
-
-        boolean harProdukter = false;
-        if(category.isPresent()){
-            List<Product> produkter = category.get().getProducts();
-            if(produkter.size() > 0){
-                harProdukter = true;
-            }
-        }
-        if(!harProdukter){
             iCategoryService.slet(id);
-        }
         return "redirect:/categoryForside";
     }
 

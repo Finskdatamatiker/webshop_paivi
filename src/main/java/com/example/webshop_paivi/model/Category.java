@@ -29,7 +29,8 @@ public class Category {
      * kategori ikke slettes.
      */
 
-    @ManyToMany(mappedBy = "categorys",fetch = FetchType.LAZY)
+
+    @ManyToMany(mappedBy = "categorys",fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     protected List<Product> products = new ArrayList<>();
 
     public Category(){}
