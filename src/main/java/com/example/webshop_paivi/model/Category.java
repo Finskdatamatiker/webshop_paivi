@@ -17,20 +17,19 @@ public class Category {
     private String caname;
 
     /**
-     * Category kan have mange produkter, et produkt kan tilhøre mange kategorier.
-     * Når man opretter et produkt, kan man tilføje en kategori til den (har ikke gjort det obligatorisk)
-     * Men jeg har valgt, at category opretter man uden at tilknytte kategorier.
-     * Så det er gennem produkter, at kategorier vælges = produktet mapped by kategorier
-     * Man kunne gøre det omvendt eller begge veje, men jeg har valgt produktet som indgangen.
+     * Category er parent i denne relation, fordi mappedBy categorys i child Product.
+     * (kunne også være omvendt).
+     * Så Category kan ikke slettes, hvis der er produkter (children) tilknyttede til den.
+     * Så hvis man fjerner cascade REMOVE, dvs. man prøver at give lov til at man kan
+     * slette kategori uden at slette produkter, crasher koden.
+     * Så det lader til, at JPA styrer relationen uafhængigt af cascad = Parent må ikke
+     * slettes, hvis der er children.
+     * Så cascade giver ingenting i denne ende af relationen.
+     * Har løst det med at tjekke i contoller, om der er produkter. Er der det, må
+     * kategori ikke slettes.
      */
 
-    @ManyToMany(mappedBy = "categorys",fetch = FetchType.LAZY, cascade =
-            {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH,
-                    CascadeType.PERSIST
-            })
+    @ManyToMany(mappedBy = "categorys",fetch = FetchType.LAZY)
     protected List<Product> products = new ArrayList<>();
 
     public Category(){}

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.PrimitiveIterator;
 
 @Controller
 public class CategoryController {
@@ -69,28 +70,23 @@ public class CategoryController {
         return "redirect:/categoryForside";
     }
 
+    /**
+     * Hvis kategori har produkter, vil jeg ikke slette den.
+     * @param id
+     * @return
+     */
     @GetMapping("/deleteCategory/{id}")
     public String delete(@PathVariable("id") long id){
         Optional<Category> category = iCategoryService.findMedId(id);
-        boolean produktHarAndreKategorier = false;
-        if(category.isPresent()){
-        List<Product> produkter = category.get().getProducts();
 
-        for(Product p : produkter){
-            for(Category c : p.getCategorys()){
-                String navn = c.getCaname();
-                if(!navn.equals(category.get().getCaname())){
-                    produktHarAndreKategorier = true;
-                    break;
-                }
+        boolean harProdukter = false;
+        if(category.isPresent()){
+            List<Product> produkter = category.get().getProducts();
+            if(produkter.size() > 0){
+                harProdukter = true;
             }
         }
-        }
-        /*hvis kategori indeholder produkter, som også har
-          andre kateogier som denne, kan kategorien ikke slettes.
-          Burde laver en fejlmelding om det.
-         */
-        if(!produktHarAndreKategorier){
+        if(!harProdukter){
             iCategoryService.slet(id);
         }
         return "redirect:/categoryForside";

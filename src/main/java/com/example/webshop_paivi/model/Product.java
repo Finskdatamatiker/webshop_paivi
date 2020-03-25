@@ -32,11 +32,8 @@ public class Product {
 
     /**
      * Category kan have mange produkter, et produkt kan tilhøre mange kategorier.
-     * Når man opretter et produkt, kan man tilføje en kategori til den (har ikke gjort det obligatorisk)
-     * Men jeg har valgt, at category opretter man uden at tilknytte kategorier.
-     * Så det er gennem produkter, at kategorier vælges = produktet mapped by kategorier
-     * Man kunne gøre det omvendt eller begge veje, men jeg har valgt produktet som indgangen.
-     * Her bliver andre produkter ikke slettet fra det samme kategori, så remove er ikke med
+     * Product er child i denne relation, så hvis man fravælger CascadeType.REMOVE,
+     * kan man sagtens slette produkt uden at det påvirke Category.
      */
 
     @ManyToMany(fetch = FetchType.LAZY, cascade =
