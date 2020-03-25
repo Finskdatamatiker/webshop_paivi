@@ -16,20 +16,6 @@ public class Category {
     @NotBlank(message = "Indtast venligst navn")
     private String caname;
 
-    /**
-     * Category er parent i denne relation, fordi mappedBy categorys i child Product.
-     * (kunne også være omvendt).
-     * Så Category kan ikke slettes, hvis der er produkter (children) tilknyttede til den.
-     * Så hvis man fjerner cascade REMOVE, dvs. man prøver at give lov til at man kan
-     * slette kategori uden at slette produkter, crasher koden.
-     * Så det lader til, at JPA styrer relationen uafhængigt af cascad = Parent må ikke
-     * slettes, hvis der er children.
-     * Så cascade giver ingenting i denne ende af relationen.
-     * Har løst det med at tjekke i contoller, om der er produkter. Er der det, må
-     * kategori ikke slettes.
-     */
-
-
     @ManyToMany(mappedBy = "categorys",fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     protected List<Product> products = new ArrayList<>();
 
