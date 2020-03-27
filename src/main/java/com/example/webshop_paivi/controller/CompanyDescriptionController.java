@@ -63,5 +63,10 @@ public class CompanyDescriptionController {
     }
 
 
+    @GetMapping("/deleteCompanyDesc/{id}")
+    public String delete(@PathVariable("id") long id){
+        iCompanyDescriptionService.slet(id);
+        return "redirect:/companyDescForside";
+    }
 
 }

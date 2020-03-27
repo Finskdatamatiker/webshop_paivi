@@ -14,24 +14,24 @@
 
     <h1><br>Opret nyt produkt</h1>
 
-    <form action="#" th:action="@{/create}" th:object="${product}"  method="post">
+    <form action="#" th:action="@{/create}"method="post">
 
-        <input type=hidden th:field="*{id}" >
+        <input type=hidden th:field="${product.id}" >
         <span>Produktnavn:<br></span>
-        <input type="text" th:field="*{pname}" placeholder="navn" required>
-        <span th:if="${#fields.hasErrors('pname')}" th:errors="*{pname}">Fejl i navnet</span>
+        <input type="text" th:field="*{product.pname}" placeholder="navn" >
+        <span th:if="${#fields.hasErrors('product.pname')}" th:errors="*{product.pname}">Fejl i navnet</span>
 
         <span><br>Pris:<br></span>
-        <input type=number step="any" th:field="*{price}">
-        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Fejl i prisen</span>
+        <input type=number step="any" th:field="*{product.price}">
+        <span th:if="${#fields.hasErrors('product.price')}" th:errors="*{product.price}">Fejl i prisen</span>
 
         <span><br>Beskrivelse:<br></span>
-        <textarea input th:field="*{pdescription}" placeholder="beskrivelse" required></textarea>
-        <span th:if="${#fields.hasErrors('pdescription')}" th:errors="*{pdescription}">Fejl i beskrivelsen</span>
+        <textarea input th:field="*{product.pdescription}" placeholder="beskrivelse" required></textarea>
+        <span th:if="${#fields.hasErrors('product.pdescription')}" th:errors="*{product.pdescription}">Fejl i beskrivelsen</span>
 
         <span><br>Virksomhed:<br></span>
 
-        <select th:field="*{company}">
+        <select th:field="*{product.company}">
 
             <option value=""> Vælg her </option>
             <option th:each="c : ${virksomheder}"
@@ -40,7 +40,7 @@
         </select>
 
         <span><br>Kategorier:<br></span>
-        <select th:field="*{categorys}" multiple>
+        <select th:field="*{product.categorys}" multiple>
 
             <option value=""> Vælg her </option>
             <option th:each="ca : ${categorier}"
@@ -49,12 +49,12 @@
         </select>
 
         <span><br>Virksomhedsbeskrivelse:<br></span>
-        <textarea input th:field="${company_description.co_description}" placeholder="beskrivelse" required></textarea>
-        <span th:if="${#fields.hasErrors('company_description.co_description')}" th:errors="*{company_description.co_description}">Fejl i beskrivelsen</span>
+        <textarea input th:field="*{company_description.co_description}" placeholder="beskrivelse"></textarea>
+       <span th:if="${#fields.hasErrors('company_description.co_description')}" th:errors="*{company_description.co_description}">Fejl i beskrivelsen</span>
+
 
         <br>
         <button type="submit">Tilføj</button>
-
 
     </form>
 

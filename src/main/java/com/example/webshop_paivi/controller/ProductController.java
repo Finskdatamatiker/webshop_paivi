@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -24,30 +25,24 @@ public class ProductController {
     private final IProductService iProductService;
     private final ICompanyService iCompanyService;
     private final ICategoryService iCategoryService;
-    private final ICompanyDescriptionService iCompanyDescriptionService;
 
-    public ProductController(IProductService iPro, ICompanyService iCom, ICategoryService iCat, ICompanyDescriptionService iComde) {
+    public ProductController(IProductService iPro, ICompanyService iCom, ICategoryService iCat) {
         this.iProductService = iPro;
         this.iCompanyService = iCom;
         this.iCategoryService = iCat;
-        this.iCompanyDescriptionService = iComde;
     }
 
     @GetMapping("/")
     public String visForside(Model model){
         List<Product> liste = iProductService.getProdukter();
         if(liste.size() != 0) {
+
             model.addAttribute("produkter", liste);
         }
         return "/index";
     }
 
-    /**
-     * "tom" produkt fragtes til create-siden i model for at bliver udfyldt
-     * @param product
-     * @param model
-     * @return
-     */
+
     @GetMapping("/create")
     public String visCreate(Product product, CompanyDescription comdes, Model model)
     {
@@ -66,16 +61,12 @@ public class ProductController {
         }
     }
 
-    /**
-     * Produktoplysninger bliver flettet i template med thymeleaf, som også giver adgang
-     * til fields her i konstruktør
-     * @param product
-     * @return
-     */
     @PostMapping("/create")
-    public String lavProdukt(@Valid Product product, BindingResult br,@Valid CompanyDescription comdes, BindingResult br2, Model model)
+    public String lavProdukt(@Valid Product product, BindingResult br, @Valid CompanyDescription comdes, BindingResult br2, Model model)
     {
         if(br.hasErrors() || br2.hasErrors()){
+            model.addAttribute("product", product);
+            model.addAttribute("company_description", comdes);
             model.addAttribute("bindingResult", br);
             model.addAttribute("bindingResult2", br2);
             List<Company> liste = iCompanyService.getVirksomheder();
@@ -85,7 +76,7 @@ public class ProductController {
             product.setCompany(liste.get(0));
             return "/create";
         }
-        iCompanyDescriptionService.gem(comdes);
+
         product.setCompany_description(comdes);
         iProductService.gem(product);
         return "redirect:/";

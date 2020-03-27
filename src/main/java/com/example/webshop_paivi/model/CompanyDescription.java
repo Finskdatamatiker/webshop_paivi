@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
+@Table(name = "company_description", schema = "webshop")
 public class CompanyDescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,32 +16,22 @@ public class CompanyDescription {
     private String co_description;
 
 
-    /**
-     * Jeg har valgt at have CompanyDescription som parent. Man skal ikke ,
-     * , fordi hvis man sletter
-     * CompanyDescription,
-     */
     @OneToOne(mappedBy = "company_description", fetch = FetchType.LAZY)
     protected Product product;
 
     public CompanyDescription (){}
-
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
-
     public String getCo_description() {
         return co_description;
     }
-
     public void setCo_description(String coDescription) {
         this.co_description = coDescription;
     }
-
     public Product getProduct() {
         return product;
     }

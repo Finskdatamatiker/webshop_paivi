@@ -39,7 +39,6 @@
 
                 <td><a th:href="@{'/update/' + ${p.id}}">Opdatere</a></td>
                 <td><a th:href="@{'/delete/' + ${p.id}}">Slet</a></td>
-                <td><a th:href="@{'/createCompanyDesc/' + ${p.id}}">Tilføj virksomhedsbeskrivelse</a></td>
 
                 <td id="tiid" th:each="c : ${p.categorys}">
                     <span th:text="${c.caname}"></span>

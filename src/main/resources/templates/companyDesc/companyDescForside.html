@@ -21,13 +21,13 @@
             <th>Beskrivelse</th>
             <th></th>
             <th></th>
-            <th>Produktet</th>
 
         </tr>
         <tr th:each="c : ${beskrivelser}" class="tr">
             <td th:text="${c.id}"></td>
             <td th:text="${c.co_description}"></td>
             <td><a th:href="@{'/updateCompanyDesc/' + ${c.id}}">Opdatere</a></td>
+            <td><a th:href="@{'/deleteCompanyDesc/' + ${c.id}}">Slet</a></td>
 
 
         </tr>

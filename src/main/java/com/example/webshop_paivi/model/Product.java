@@ -1,6 +1,7 @@
 package com.example.webshop_paivi.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class Product {
     @NotBlank(message = "Indtast venligst produktnavnet")
     private String pname;
     @NotNull
+    @Min(0)
     private double price;
     @NotBlank(message = "Indtast venligst beskrivelse")
     private String pdescription;
@@ -35,18 +37,17 @@ public class Product {
      */
 
     @ManyToMany(fetch = FetchType.LAZY, cascade =
-            {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+            {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name="products_categorys",
             joinColumns = { @JoinColumn(name = "product_id")},
             inverseJoinColumns = { @JoinColumn(name="category_id")})
     protected List<Category> categorys = new ArrayList<>();
 
     /**
-     *
+     * beskrivelse kan ikke slettes, hvis der er produkt knyttet til den
      */
-    @MapsId
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "company_description_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_description_id")
     protected CompanyDescription company_description;
 
     public Product() {}

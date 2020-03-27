@@ -1,7 +1,5 @@
 package com.example.webshop_paivi.model;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -16,7 +14,8 @@ public class Category {
     @NotBlank(message = "Indtast venligst navn")
     private String caname;
 
-    @ManyToMany(mappedBy = "categorys",fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(mappedBy = "categorys",fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     protected List<Product> products = new ArrayList<>();
 
     public Category(){}
