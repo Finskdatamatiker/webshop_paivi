@@ -1,7 +1,7 @@
 package com.example.webshop_paivi.controller;
 
 import com.example.webshop_paivi.model.Company;
-import com.example.webshop_paivi.service.company.ICompanyService;
+import com.example.webshop_paivi.service.IService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,15 +15,15 @@ import java.util.List;
 @Controller
 public class CompanyController {
 
-    private final ICompanyService iCompanyService;
+    private final IService<Company> iCompanyService;
 
-    public CompanyController(ICompanyService iCompanyService) {
+    public CompanyController(IService<Company> iCompanyService) {
         this.iCompanyService = iCompanyService;
     }
 
     @GetMapping("/companyForside")
     public String visCompanyForside(Model model){
-        List<Company> listeVirksomheder = iCompanyService.getVirksomheder();
+        List<Company> listeVirksomheder = iCompanyService.findAll();
         model.addAttribute("virksomheder", listeVirksomheder);
         return "/company/companyForside";
     }
@@ -54,14 +54,14 @@ public class CompanyController {
             return "/company/createCompany";
         }
 
-        iCompanyService.gem(company);
+        iCompanyService.save(company);
         return "redirect:/companyForside";
     }
 
 
     @GetMapping("/updateCompany/{id}")
     public String visUpdate(@PathVariable("id") long id, Model model){
-        model.addAttribute("company", iCompanyService.findMedId(id));
+        model.addAttribute("company", iCompanyService.findById(id));
         return "/company/updateCompany";
     }
 
@@ -71,13 +71,13 @@ public class CompanyController {
             model.addAttribute("bindingResult", bindingResult);
             return "/company/updateCompany";
         }
-        iCompanyService.gem(company);
+        iCompanyService.save(company);
         return "redirect:/companyForside";
     }
 
     @GetMapping("/deleteCompany/{id}")
     public String delete(@PathVariable("id") long id){
-        iCompanyService.slet(id);
+        iCompanyService.deleteById(id);
         return "redirect:/companyForside";
     }
 

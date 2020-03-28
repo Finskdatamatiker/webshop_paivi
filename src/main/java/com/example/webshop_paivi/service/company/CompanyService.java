@@ -2,6 +2,7 @@ package com.example.webshop_paivi.service.company;
 
 import com.example.webshop_paivi.model.Company;
 import com.example.webshop_paivi.repository.CompanyRepository;
+import com.example.webshop_paivi.service.IService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CompanyService implements ICompanyService {
+public class CompanyService implements IService<Company> {
 
     private final CompanyRepository companyRepository;
     public CompanyService(CompanyRepository companyRepository) {
@@ -17,7 +18,7 @@ public class CompanyService implements ICompanyService {
     }
 
     @Override
-    public List<Company> getVirksomheder() {
+    public List<Company> findAll() {
         List<Company> companylist = new ArrayList<>();
         for(Company c : companyRepository.findAll()){
             companylist.add(c);
@@ -26,12 +27,12 @@ public class CompanyService implements ICompanyService {
     }
 
     @Override
-    public void gem(Company company) {
+    public void save(Company company) {
         companyRepository.save(company);
     }
 
     @Override
-    public Optional<Company> findMedId(long id) {
+    public Optional<Company> findById(long id) {
         try{
             return companyRepository.findById(id);
         }catch (IllegalArgumentException ia) {
@@ -41,7 +42,7 @@ public class CompanyService implements ICompanyService {
     }
 
     @Override
-    public void slet(long id) {
+    public void deleteById(long id) {
         companyRepository.deleteById(id);
     }
 }

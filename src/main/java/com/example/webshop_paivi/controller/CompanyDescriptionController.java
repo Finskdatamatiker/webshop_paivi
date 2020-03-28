@@ -1,7 +1,7 @@
 package com.example.webshop_paivi.controller;
 
 import com.example.webshop_paivi.model.CompanyDescription;
-import com.example.webshop_paivi.service.companydescription.ICompanyDescriptionService;
+import com.example.webshop_paivi.service.IService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,14 +15,14 @@ import java.util.List;
 @Controller
 public class CompanyDescriptionController {
 
-    private final ICompanyDescriptionService iCompanyDescriptionService;
+    private final IService<CompanyDescription> iCompanyDescriptionService;
 
-    public CompanyDescriptionController(ICompanyDescriptionService iCompanyDescriptionService){
+    public CompanyDescriptionController(IService<CompanyDescription> iCompanyDescriptionService){
         this.iCompanyDescriptionService = iCompanyDescriptionService;
     }
     @GetMapping("/companyDescForside")
     public String visCompanyDescForside(Model model){
-        List<CompanyDescription> listeBeskrivelser = iCompanyDescriptionService.getComBeskrivelser();
+        List<CompanyDescription> listeBeskrivelser = iCompanyDescriptionService.findAll();
         model.addAttribute("beskrivelser", listeBeskrivelser);
         return "/companyDesc/companyDescForside";
     }
@@ -41,14 +41,14 @@ public class CompanyDescriptionController {
             model.addAttribute("bindingResult", bindingResult);
             return "/companyDesc/createCompanyDesc";
         }
-        iCompanyDescriptionService.gem(companyDesc);
+        iCompanyDescriptionService.save(companyDesc);
         return "redirect:/companyDescForside";
     }
 
 
     @GetMapping("/updateCompanyDesc/{id}")
     public String visUpdate(@PathVariable("id") long id, Model model){
-        model.addAttribute("companyDesc", iCompanyDescriptionService.findMedId(id));
+        model.addAttribute("companyDesc", iCompanyDescriptionService.findById(id));
         return "/companyDesc/updateCompanyDesc";
     }
 
@@ -58,14 +58,14 @@ public class CompanyDescriptionController {
             model.addAttribute("bindingResult", bindingResult);
             return "/companyDesc/updateCompanyDesc";
         }
-        iCompanyDescriptionService.gem(companyDesc);
+        iCompanyDescriptionService.save(companyDesc);
         return "redirect:/companyDescForside";
     }
 
 
     @GetMapping("/deleteCompanyDesc/{id}")
     public String delete(@PathVariable("id") long id){
-        iCompanyDescriptionService.slet(id);
+        iCompanyDescriptionService.deleteById(id);
         return "redirect:/companyDescForside";
     }
 

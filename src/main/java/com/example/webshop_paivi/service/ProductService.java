@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductService implements IProductService {
+public class ProductService implements IService<Product> {
     
     private final ProductRepository productRepository;
     public ProductService(ProductRepository productRepository) {
@@ -17,7 +17,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> getProdukter() {
+    public List<Product> findAll() {
         List<Product> productlist = new ArrayList<>();
         for(Product p : productRepository.findAll()){
             productlist.add(p);
@@ -26,13 +26,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void gem(Product product)
+    public void save(Product product)
     {
         productRepository.save(product);
     }
 
     @Override
-    public Optional<Product> findMedId(long id) {
+    public Optional<Product> findById(long id) {
         try{
             return productRepository.findById(id);
         }catch (IllegalArgumentException ia){
@@ -42,5 +42,5 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void slet(long id){ productRepository.deleteById(id);}
+    public void deleteById(long id){ productRepository.deleteById(id);}
 }
